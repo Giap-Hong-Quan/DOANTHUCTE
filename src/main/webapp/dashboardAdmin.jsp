@@ -6,13 +6,15 @@
     <title>Trang Admin</title>
      <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/toast.css">
+<link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/style.css">
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
     <body class="sb-nav-fixed">
-     
+	<%@include file="header_admin.jsp" %>
+
         <div id="layoutSidenav">
             <div id="layoutSidenav_nav">
-          
+          	<%@include file="sidebar_admin.jsp" %>
             </div>
             <div id="layoutSidenav_content">
                 <main>
@@ -88,17 +90,16 @@
                         </div>
                     </div>
                 </main>
-     
+     			<%@include file="footer_admin.jsp" %>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        
-        <script src="<%= request.getContextPath() %>/assets/javascript/scripts.js"></script>
+        <script src="<%= ((HttpServletRequest) request).getContextPath() %>/assets/js/toast.js"></script>
+        <script src="<%= ((HttpServletRequest) request).getContextPath() %>/assets/js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="<%= request.getContextPath() %>/assets/javascript/chart-area-demo.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/javascript/chart-bar-demo.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/chart-area-demo.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="<%= request.getContextPath() %>/assets/javascript/datatables-simple-demo.js"></script>
-   <!--  </body> -->
+        <script src="<%= request.getContextPath() %>/assets/js/datatables-simple-demo.js"></script>
 </body>
 </html>
