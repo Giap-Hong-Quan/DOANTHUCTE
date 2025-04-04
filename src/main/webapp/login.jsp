@@ -6,24 +6,28 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/toast.css">
 
 </head>
 <body>
 <%
-String message=(String) session.getAttribute("message");
-if(message!=null){
+    String successMessage = (String) session.getAttribute("success");
+    if (successMessage != null) {
 %>
-<div id="toast" class="toast show">
-        <div class="toast-body">
-            <%= message %>
-        </div>
-</div>
-<% 
-    session.removeAttribute("message"); 
-    } 
-%>
+    <script>
+      Swal.fire({
+        icon: 'success',
+        title: 'Thành công!',
+        text: '<%= successMessage %>',
+        showConfirmButton: false,
+        timer: 2000
+      });
+    </script>
+<%
+    session.removeAttribute("success");
+    }
+%>>
 <!-- Login 11 - Bootstrap Brain Component -->
 <section class="py-3 py-md-5 py-xl-8">
   <div class="container">

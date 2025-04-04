@@ -53,9 +53,6 @@ public class loginGG extends HttpServlet {
 		String name=userJson.get("name").getAsString();
 		String picture=userJson.get("picture").getAsString();
 		
-		
-		
-		
 		login_DAO loginGG=new login_DAO(connect.getConnections());
 		user user= loginGG.loginGoogle(name, email, googleId, picture);
 		

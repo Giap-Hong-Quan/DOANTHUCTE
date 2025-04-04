@@ -3,9 +3,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Trang Admin</title>
+    <title>Dashboard Admin</title>
      <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/toast.css">
 <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/style.css">
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>

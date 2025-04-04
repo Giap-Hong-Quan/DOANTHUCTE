@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="index.html">LapTopShop</a>
+    <a class="navbar-brand ps-3" href="<%= request.getContextPath() %>/admin/dashboardAdmin">DOGO</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
@@ -19,9 +19,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="#!">Thông tin cá nhân</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <form action="/logout" method="post">
-                    <li><button class="dropdown-item" type="submit">Đăng xuất khỏi trái đất</button></li>
-                </form>
+                <li><button class="dropdown-item" type="submit">Đăng xuất</button></li>
             </ul>
         </li>
     </ul>

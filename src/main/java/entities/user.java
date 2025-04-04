@@ -12,6 +12,29 @@ public class user {
 	private String password;
 	private String avatar;
 	private int role_id;
+	private String roleName;
+	public user(int id, String name, String email, String google_id, String facebook_id, String phone, String password,
+			String avatar, int role_id, String roleName, Timestamp create_at, Timestamp update_at) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.google_id = google_id;
+		this.facebook_id = facebook_id;
+		this.phone = phone;
+		this.password = password;
+		this.avatar = avatar;
+		this.role_id = role_id;
+		this.roleName = roleName;
+		this.create_at = create_at;
+		this.update_at = update_at;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
 	private Timestamp create_at;
 	private Timestamp update_at;
 	public int getId() {

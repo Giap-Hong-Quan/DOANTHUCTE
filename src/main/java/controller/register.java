@@ -22,7 +22,7 @@ public class register extends HttpServlet {
 	    login_Service registerService=new login_Service();
 	    boolean register=registerService.registerService(name, phone, password);
 	    if(register) {
-	    	req.getSession().setAttribute("message", "Đăng ký thành công! Vui lòng đăng nhập.");
+	    	req.getSession().setAttribute("success", "Đăng ký thành công! Vui lòng đăng nhập.");
 	    	resp.sendRedirect(req.getContextPath()+"/login");
 	    }else {
 	    	req.setAttribute("error", "Đăng ký thất bại. Vui lòng thử lại.");
