@@ -134,5 +134,13 @@ public class user {
 		this.avatar = avatar;
 		this.role_id = role_id;
 	}
+	public user(String name, String email, String phone, String avatar, int role_id) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+		this.avatar = avatar;
+		this.role_id = role_id;
+	}
 	
 }

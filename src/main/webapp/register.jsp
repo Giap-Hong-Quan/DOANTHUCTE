@@ -23,7 +23,7 @@
       <div class="col-12 col-lg-10 col-xl-8">
         <div class="row gy-5 justify-content-center">
           <div class="col-12 col-lg-5">
-            <form action="http://localhost:8080/DOANTHUCTE/register" method="post">
+            <form action="<%= request.getContextPath() %>/register" method="post">
               <div class="row gy-3 overflow-hidden">
               	<div class="col-12">
                   <div class="form-floating mb-3">

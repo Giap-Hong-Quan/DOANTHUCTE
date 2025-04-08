@@ -12,6 +12,10 @@
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
                 Tài khoản
             </a>
+            <a class="nav-link" href="<%= request.getContextPath() %>/admin/category   ">
+                <div class="sb-nav-link-icon"><i class="fa-solid fa-layer-group"></i></div>
+                Doanh Mục
+            </a>
             <a class="nav-link" href="<%= request.getContextPath() %>/admin/product">
                 <div class="sb-nav-link-icon"><i class="fa-solid fa-box"></i></div>
                 Sản phẩm

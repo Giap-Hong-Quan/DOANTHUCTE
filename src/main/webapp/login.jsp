@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +23,7 @@
         title: 'Thành công!',
         text: '<%= successMessage %>',
         showConfirmButton: false,
-        timer: 2000
+        timer: 3000
       });
     </script>
 <%
@@ -43,7 +45,7 @@
       <div class="col-12 col-lg-10 col-xl-8">
         <div class="row gy-5 justify-content-center">
           <div class="col-12 col-lg-5">
-            <form action="http://localhost:8080/DOANTHUCTE/login" method="post">
+            <form action="<%= request.getContextPath() %>/login" method="post">
               <div class="row gy-3 overflow-hidden">
               	
                 <div class="col-12">

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Danh sách tài khoản khách hàng</title>
+<title>Danh sách doanh mục</title>
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/style.css">
@@ -24,14 +24,14 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Quản lý tài khoản</h1>
+                        <h1 class="mt-4">Quản lý doanh mục</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active"><a href="<%= request.getContextPath() %>/admin/dashboardAdmin">Trang thống kê</a>/Tài khoản</li>
+                            <li class="breadcrumb-item active"><a href="<%= request.getContextPath() %>/admin/dashboardAdmin">Trang thống kê</a>/Doanh mục</li>
                         </ol>     
                         <div class="container mt-5">
                           <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h2>Danh sách tài khoản</h2>
-                            <a href="<%= request.getContextPath() %>/admin/user/add" class="btn btn-primary">Thêm</a>
+                            <h2>Danh sách doanh mục</h2>
+                            <a href="<%= request.getContextPath() %>/admin/category/add" class="btn btn-primary">Thêm</a>
                           </div>
                     
                           <table class="table table-bordered table-hover">
@@ -39,28 +39,33 @@
                               <tr>
                                 <th>Sô thứ tự</th>
                                 <th>Tên</th>
-                                <th>Email</th>
-                                <th>Số điện thoại</th>
-                                <th>Vai trò</th>
+                                <th>Hình Ảnh</th>
                                 <th>Thao tác</th>
                               </tr>
                             </thead>
                             <tbody>
-                          	<c:forEach var="user" items="${users}"  varStatus="status">
+                          	<c:forEach var="category" items="${categorys}"  varStatus="status">
                                 <tr>
                                  <td>${status.index + 1}</td>
-                                  <td>${user.name}</td>
-                                  <td>${user.email}</td>
-                                  <td>${user.phone}</td>
-                                  <td>${user.roleName}</td>
+                                  <td>${category.name}</td>
+                                     <td>  <c:choose>
+									    <c:when test="${not empty category.image}">
+									        <img src="<%= request.getContextPath() %>/assets/images/${category.image}" 
+									             alt="Avatar"  
+									             style="width: 70px; height: 70px; object-fit: cover; border-radius: 10px;">
+									    </c:when>
+									    <c:otherwise>
+									        <img src="<%= request.getContextPath() %>/assets/images/default-avatar.jpg" 
+									             alt="Default Avatar"  
+									             style="width: 70px; height: 70px; object-fit: cover; border-radius: 10px;">
+									    </c:otherwise>
+									</c:choose></td>
+                                 
                                   <td>
-                                    <a href="<%= request.getContextPath() %>/admin/user/detail/${user.id}" class="btn btn-info btn-sm"
-                                      >Chi tiết</a
-                                    >
-                                    <a href="<%= request.getContextPath() %>/admin/user/update/${user.id}" class="btn btn-warning btn-sm"
+                                    <a href="<%= request.getContextPath() %>/admin/category/update/${category.id}" class="btn btn-warning btn-sm"
                                       >Cập nhât</a
                                     >
-                                    <a href="<%= request.getContextPath() %>/admin/user/delete/${user.id}" class="btn btn-danger btn-sm"
+                                    <a href="<%= request.getContextPath() %>/admin/category/delete/${category.id}" class="btn btn-danger btn-sm"
                                       >Xóa</a
                                     >
                                   </td>

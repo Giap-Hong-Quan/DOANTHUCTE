@@ -90,10 +90,54 @@ public class user_DAO {
 		}
 		return false;
 	}
+	
+	//  hàm updateuser by id
+	public boolean updateUserById(int id,user user) {
+		String query="UPDATE users SET name=?,email=?,phone=?,avatar=?,role_id=? WHERE id=? ";
+		try(PreparedStatement stmt =conn.prepareStatement(query)){
+			stmt.setString(1, user.getName());
+			stmt.setString(2, user.getEmail());
+			stmt.setString(3, user.getPhone());
+			stmt.setString(4, user.getAvatar());
+			stmt.setInt(5, user.getRole_id());
+			stmt.setInt(6, id);
+			int rs=stmt.executeUpdate();
+			return rs>0;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	// hàm thêm user 
+	public boolean addUser(String name,String email,String phone,String password,int role_id,String avatar) {
+		String query="INSERT INTO users(name,email,phone,password,role_id,avatar) VALUES (?,?,?,?,?,?)";
+		try(PreparedStatement stmt=conn.prepareStatement(query)){
+			stmt.setString(1, name);
+			stmt.setString(2, email);
+			stmt.setString(3, phone);
+			stmt.setString(4, password);
+			stmt.setInt(5, role_id);
+			stmt.setString(6, avatar);
+			int rs=stmt.executeUpdate();
+			return rs>0;
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Đăng ký không thành công !");
+		}
+		return false;
+	}
 	public static void main(String[] args) {
 		Connection conn=connect.getConnections();
 		user_DAO dao=new user_DAO(conn);
-		System.out.println( dao.deleteUserById(34));
+		boolean a= dao.addUser("quan", "quan12@gmail.com", "12314324","123456", 2,"ok.jsp");
+		if(a) {
+			System.out.println("thành cong");
+		}else {
+			System.out.println("thât bại");
+		}
 	}
+	
+	
 }
 
