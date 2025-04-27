@@ -142,5 +142,8 @@ public class user {
 		this.avatar = avatar;
 		this.role_id = role_id;
 	}
+	public user() {
+		// TODO Auto-generated constructor stub
+	}
 	
 }

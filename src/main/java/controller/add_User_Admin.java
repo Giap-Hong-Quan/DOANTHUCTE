@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import service.user_Service;
-@MultipartConfig
+@MultipartConfig(
+	    fileSizeThreshold = 1024 * 1024, // 1MB
+	    maxFileSize = 1024 * 1024 * 10, // 10MB
+	    maxRequestSize = 1024 * 1024 * 50 // 50MB
+	)
 @WebServlet(name = "addUserAdminServlet",urlPatterns = "/admin/user/add")
 public class add_User_Admin extends HttpServlet {
 	private user_Service userService=new user_Service();

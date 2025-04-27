@@ -12,7 +12,6 @@
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/style.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
  <body class="sb-nav-fixed">
@@ -50,7 +49,7 @@
                                   <td>${category.name}</td>
                                      <td>  <c:choose>
 									    <c:when test="${not empty category.image}">
-									        <img src="<%= request.getContextPath() %>/assets/images/${category.image}" 
+									        <img src="${category.image}" 
 									             alt="Avatar"  
 									             style="width: 70px; height: 70px; object-fit: cover; border-radius: 10px;">
 									    </c:when>
@@ -105,13 +104,7 @@
   });
 </script>
         
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/scripts.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/chart-area-demo.js"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/chart-bar-demo.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="<%= request.getContextPath() %>/assets/js/datatables-simple-demo.js"></script>
+        
         <%
     String successMessage = (String) session.getAttribute("success");
     if (successMessage != null) {
@@ -147,6 +140,12 @@
     session.removeAttribute("error");
     }
 %>
-        
+        <script src="<%= ((HttpServletRequest) request).getContextPath() %>/assets/js/toast.js"></script>
+        <script src="<%= ((HttpServletRequest) request).getContextPath() %>/assets/js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/chart-area-demo.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/datatables-simple-demo.js"></script>
     </body>
 </html>

@@ -11,7 +11,6 @@
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/style.css">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
@@ -49,9 +48,9 @@
                                 <tr>
                                   <td>${(currentPage - 1) * pageSize + status.index + 1}</td>
                                   <td>${product.name}</td>
-                                  <td>${product.price}</td>
+                                 <td class="price">${product.price}</td>
                                   <td>${product.quantity}</td>
-                                  <td>${product.category_id}</td>
+                                  <td>${product.categoryName}</td>
                                   <td>
                                     <a href="<%= request.getContextPath() %>/admin/product/detail/${product.id}" class="btn btn-info btn-sm">Chi tiết</a>
                                     <a href="<%= request.getContextPath() %>/admin/product/update/${product.id}" class="btn btn-warning btn-sm">Cập nhật</a>
@@ -94,7 +93,16 @@
                 <%@include file="footer_admin.jsp" %>
             </div>
         </div>
-        
+        <script>
+  // Format giá tiền kiểu Việt Nam
+  document.querySelectorAll('.price').forEach(el => {
+    const raw = parseFloat(el.textContent); // Lấy giá trị gốc (số)
+    if (!isNaN(raw)) {
+      const formatted = raw.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+      el.textContent = formatted; // Cập nhật lại nội dung đã format
+    }
+  });
+</script>
         <!-- Các script -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
@@ -121,7 +129,7 @@
           });
         </script>
         
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+      
         <script src="<%= request.getContextPath() %>/assets/js/scripts.js"></script>
         
         <%
@@ -159,5 +167,12 @@
                 session.removeAttribute("error");
             }
         %>
+        <script src="<%= ((HttpServletRequest) request).getContextPath() %>/assets/js/toast.js"></script>
+        <script src="<%= ((HttpServletRequest) request).getContextPath() %>/assets/js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/chart-area-demo.js"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="<%= request.getContextPath() %>/assets/js/datatables-simple-demo.js"></script>
     </body>
 </html>

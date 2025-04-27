@@ -22,10 +22,10 @@ public class delete_Category_Admin extends HttpServlet {
             boolean success = categoryService.deleteCategoryById(categoryId);
             if (!success) {
                 // Gán thông báo thất bại vào session
-                req.getSession().setAttribute("error", "Xóa người dùng thất bại.");
+                req.getSession().setAttribute("error", "Xóa danh mục sản phẩm thất bại.");
             } else {
                 // Gán thông báo thành công vào session
-                req.getSession().setAttribute("success", "Xóa người dùng thành công.");
+                req.getSession().setAttribute("success", "Xóa danh mục sản phẩm thành công.");
             }
             // Redirect về danh sách người dùng
             resp.sendRedirect(req.getContextPath() + "/admin/category");

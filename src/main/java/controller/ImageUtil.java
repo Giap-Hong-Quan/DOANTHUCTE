@@ -1,53 +1,56 @@
 package controller;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Map;
 import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+
 public class ImageUtil {
+	  public static String saveImage(Part imagePart, ServletContext context) throws IOException {
+	        if (imagePart == null || imagePart.getSize() == 0) {
+	            return null;
+	        }
 
-    // Hàm lưu ảnh
-    public static String saveImage(Part imagePart, ServletContext context) throws IOException {
-        if (imagePart == null || imagePart.getSize() == 0) {
-            return null; // Không có file upload
-        }
+	        // Kiểm tra Content-Type
+	        String contentType = imagePart.getContentType();
+	        if (contentType == null || !contentType.startsWith("image/")) {
+	            throw new IOException("Chỉ chấp nhận tệp ảnh");
+	        }
 
-        // Lấy tên file gốc
-        String submittedFileName = Paths.get(imagePart.getSubmittedFileName()).getFileName().toString();
-        
-        // Lấy đuôi file (vd: .jpg, .png, .gif)
-        String fileExtension = getFileExtension(submittedFileName);
-        
-        // Tạo tên file mới với UUID và tên file gốc
-        String uuid = UUID.randomUUID().toString();
-        String fileName = uuid + "_" + submittedFileName;  // Kết hợp UUID với tên file gốc
+	        try (InputStream inputStream = imagePart.getInputStream();
+	             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+	            
+	            // Chuyển InputStream thành byte array
+	            byte[] buffer = new byte[4096];
+	            int bytesRead;
+	            while ((bytesRead = inputStream.read(buffer)) != -1) {
+	                outputStream.write(buffer, 0, bytesRead);
+	            }
+	            byte[] imageBytes = outputStream.toByteArray();
 
-        // Đường dẫn thư mục lưu ảnh
-        String folderPath = context.getRealPath("/assets/images/");
-        File folder = new File(folderPath);
-        if (!folder.exists()) folder.mkdirs();
+	            // Upload lên Cloudinary
+	            Cloudinary cloudinary = controller.CloudinaryConfig.getInstance();
+	            Map<String, Object> uploadResult = cloudinary.uploader().upload(
+	                imageBytes,
+	                ObjectUtils.asMap(
+	                    "public_id", "uploads/" + UUID.randomUUID().toString(),
+	                    "resource_type", "auto"
+	                )
+	            );
 
-        // Đường dẫn đầy đủ của file
-        String filePath = folderPath + File.separator + fileName;
-
-        // Ghi nội dung file từ Part vào đường dẫn thực
-        try (InputStream input = imagePart.getInputStream()) {
-            Files.copy(input, Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
-        }
-
-        // Trả về tên file đã lưu để lưu vào DB (bao gồm UUID + tên file gốc)
-        return fileName;
-    }
-
-    // Hàm lấy đuôi file (vd: .jpg, .png, .gif)
-    private static String getFileExtension(String filePath) {
-        int lastDotIndex = filePath.lastIndexOf(".");
-        return (lastDotIndex != -1) ? filePath.substring(lastDotIndex) : "";
-    }
+	            return (String) uploadResult.get("secure_url");
+	        } catch (Exception e) {
+	            throw new IOException("Không thể upload ảnh lên Cloudinary: " + e.getMessage(), e);
+	        }
+	    }
 }

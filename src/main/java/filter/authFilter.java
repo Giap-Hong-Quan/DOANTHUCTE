@@ -22,7 +22,7 @@ public class authFilter implements Filter {
         System.out.println("🔍 Request Path: " + path); // DEBUG
 
         // Các đường dẫn được phép truy cập không cần đăng nhập
-        String[] allowedPaths = {"/login", "/login.jsp","/register.jsp", "/loginGG", "/loginFB", "/register", "/403.jsp", "/"};
+        String[] allowedPaths = {"/login", "/login.jsp","/register.jsp", "/loginGG", "/loginFB", "/register", "/403.jsp", "/","/home.jsp"};
         for (String allowed : allowedPaths) {
             if (path.equals(allowed)) { 
                 System.out.println("✅ Bỏ qua kiểm tra đăng nhập: " + path);

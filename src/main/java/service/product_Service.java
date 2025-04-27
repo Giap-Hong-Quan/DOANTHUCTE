@@ -1,6 +1,9 @@
 package service;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -49,5 +52,106 @@ public class product_Service {
 	    public int getTotalPages(int pageSize) {
 	        int totalProducts = productDao.countAllProducts();
 	        return (int) Math.ceil((double) totalProducts / pageSize);
+	    }
+	// hàm sử lý lấy ra thông tin sản phẩm và hình ảnh  theo 
+	    public product getProductById(int id) {
+	    	product product=productDao.getProductById(id);
+	    	if(product!=null) {
+	    		product.setImages(productimagesDao.getImageByProductId(id));
+	    	}
+	    	return product;
+	    }
+	    // hàm xóa sản phẩm 
+	    public boolean deleteProduct(int id) {
+	        try {
+	            // 1. Xóa ảnh trước
+	            productimagesDao.deleteImagesByProductId(id);
+	            
+	            // 2. Xóa sản phẩm
+	            return productDao.deleteProduct(id);
+	            
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+	    // update
+	    public boolean updateProduct(int id,product product, List<Part> imageParts, ServletContext context) {
+	        try {
+	            // 1. Cập nhật thông tin sản phẩm
+	            boolean productUpdated = productDao.updateProduct(id, product);
+	            
+	            if (productUpdated) {
+	                // 2. Xóa ảnh cũ
+	                productimagesDao.deleteImagesByProductId(id);
+	              
+	    		    for (Part part : imageParts) {
+	    		        if (part.getSize() > 0) {
+	    		            try {
+	    		                String fileName = imageUtil.saveImage(part, context); // lưu ảnh và lấy tên file
+	    		                productimages productImage = new productimages();
+	    		                productImage.setProduct_id(id); // gán id sản phẩm
+	    		                productImage.setImage(fileName); // gán tên ảnh
+	    		              boolean addimage=  productimagesDao.addimages(productImage); // thêm ảnh vào DB
+	    		            } catch (IOException e) {
+	    		                e.printStackTrace();
+	    		                return false; // Nếu lỗi khi xử lý ảnh thì báo thất bại
+	    		            }
+	    		        }
+	    		    }
+	               
+	            }
+	            return productUpdated;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
+	    
+	   // hàm lấy ra 4 sản phẩm mới nhất theo id loại sản phẩm 
+	    public List<product> getLatestProductsByCategory(int categoryId, int limit) {
+	        List<product> products = productDao.getLatestProductsByCategory(categoryId, limit);
+
+	        // Lặp qua từng sản phẩm để gán ảnh đầu tiên
+	        for (product p : products) {
+	            String firstImage = productimagesDao.getFirstImageByProductId(p.getId());
+
+	            // Kiểm tra nếu có ảnh đầu tiên thì gán vào sản phẩm
+	            if (firstImage != null) {
+	                // Tạo một danh sách ảnh và thêm ảnh đầu tiên
+	                List<productimages> imageList = new ArrayList<>();
+	                imageList.add(new productimages(p.getId(), firstImage)); 
+	                p.setImages(imageList);  // Gán danh sách ảnh vào sản phẩm
+	            }
+	        }
+
+	        return products;
+	    }
+	    public static void main(String[] args) {
+	        try {
+	            product_Service productService = new product_Service();  // Khởi tạo productService
+	            List<product> products = productService.getLatestProductsByCategory(4, 4);  // Lấy ra 4 sản phẩm mới nhất theo categoryId=4
+
+	            // In ra danh sách sản phẩm
+	            for (product p : products) {
+	                System.out.println("Product ID: " + p.getId());
+	                System.out.println("Product Name: " + p.getName());
+	                System.out.println("Product Description: " + p.getDescription());
+	                System.out.println("Product Price: " + p.getPrice());
+	                
+	                if (p.getImages() != null && !p.getImages().isEmpty()) {
+	                    System.out.println("Product Images: ");
+	                    for (productimages img : p.getImages()) {
+	                        System.out.println("- " + img.getImage());
+	                    }
+	                } else {
+	                    System.out.println("No images found for this product.");
+	                }
+	                System.out.println("------------------------------");
+	            }
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
 	    }
 }

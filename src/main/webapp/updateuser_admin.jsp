@@ -11,7 +11,6 @@
  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
  <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/style.css">
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" ></script>
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
  <body class="sb-nav-fixed">
@@ -60,22 +59,18 @@
               <div class="mb-3">
                 <label for="avatar" class="form-label">Ảnh đại diện</label>
                 <input class="form-control" type="file" id="avatar" name="avatar" accept="image/*">
-                 <c:choose>
-									    <c:when test="${fn:startsWith(user.avatar, 'http')}">
-									        <img src="${user.avatar}" alt="Avatar">
-									    </c:when>
-									    <c:when test="${not empty user.avatar}">
-									        <img src="<%= request.getContextPath() %>/assets/images/${user.avatar}" 
-									             alt="Avatar"  
-									             style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
-									    </c:when>
-									    <c:otherwise>
-									        <img src="<%= request.getContextPath() %>/assets/images/default-avatar.jpg" 
-									             alt="Default Avatar"  
-									             style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
-									    </c:otherwise>
-									</c:choose>
-              </div>
+                 									<c:choose>
+    <c:when test="${not empty user.avatar}">
+        <img src="${user.avatar}" 
+             alt="Avatar"  
+             style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
+    </c:when>
+    <c:otherwise>
+        <img src="<%= request.getContextPath() %>/assets/images/default-avatar.jpg" 
+             alt="Default Avatar"  
+             style="width: 200px; height: 200px; object-fit: cover; border-radius: 10px;">
+    </c:otherwise>
+</c:choose>
 
               <div class="d-grid">
                 <button type="submit" class="btn btn-primary btn-lg">Cập nhật</button>
@@ -88,7 +83,7 @@
              <%@include file="footer_admin.jsp" %>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+     
         <script src="<%= request.getContextPath() %>/assets/js/scripts.js"></script>
         <script src="<%= request.getContextPath() %>/assets/https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="<%= request.getContextPath() %>/assets/js/chart-area-demo.js"></script>

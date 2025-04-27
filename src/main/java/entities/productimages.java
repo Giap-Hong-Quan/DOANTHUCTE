@@ -31,5 +31,10 @@ public class productimages {
 	public productimages() {
 		super();
 	}
+	public productimages(int product_id, String image) {
+		super();
+		this.product_id = product_id;
+		this.image = image;
+	}
 	
 }

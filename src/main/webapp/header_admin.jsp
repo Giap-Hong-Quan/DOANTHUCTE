@@ -1,5 +1,18 @@
+<%@page import="entities.user"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   
+    
+<%
+    user u = (user) session.getAttribute("userNormal");
+    if (u == null) {
+        u = (user) session.getAttribute("userGG");
+    }
+    if (u == null) {
+        u = (user) session.getAttribute("userFB");
+    }
+%>
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="<%= request.getContextPath() %>/admin/dashboardAdmin">DOGO</a>
@@ -9,7 +22,7 @@
     <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
         <div class="input-group">
           
-           <span class="welcome">Chào mừng </span>
+           <span class="welcome">Chào mừng <%= u.getName()%> </span>
         </div>
     </form>
     <!-- Navbar-->
@@ -17,9 +30,9 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#!">Thông tin cá nhân</a></li>
+                <li><a class="dropdown-item" href="<%= request.getContextPath() %>/profile">Thông tin cá nhân</a></li>
                 <li><hr class="dropdown-divider" /></li>
-                <li><button class="dropdown-item" type="submit">Đăng xuất</button></li>
+                <li><a class="dropdown-item" href="<%= request.getContextPath()%>/logout">Đăng xuất</a></li>
             </ul>
         </li>
     </ul>

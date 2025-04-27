@@ -11,7 +11,7 @@
  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
  <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/style.css">
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" ></script>
+ 
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
  <body class="sb-nav-fixed">
@@ -25,7 +25,7 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Thêm sản phẩm</h1>
                         <ol class="breadcrumb mb-4">
-                          <li class="breadcrumb-item active"><a href="<%= request.getContextPath() %>/admin/dashboardAdmin">Thống kê</a><a href="<%= request.getContextPath() %>/admin/product">/Tài khoản</a>/Thêm</li>
+                          <li class="breadcrumb-item active"><a href="<%= request.getContextPath() %>/admin/dashboardAdmin">Thống kê</a><a href="<%= request.getContextPath() %>/admin/product">/Sản phẩm</a>/Thêm</li>
                         </ol>     
                         <div class="container mt-4">
                           <div class="card">
@@ -37,14 +37,14 @@
                 <input type="text" class="form-control" id="name" name="name"  placeholder="Nhập tên sản phẩm" required>
               </div>
 
-              <div class="mb-3">
-                <label for="description" class="form-label">Mô tả sản phẩm</label>
-                <input type="text" class="form-control" id="description" name="description"  placeholder="Nhập mô tả sản phẩm" required>
-              </div>
+            <div class="mb-3">
+    <label for="description" class="form-label">Mô tả sản phẩm</label>
+    <textarea class="form-control" id="description" name="description" placeholder="Nhập mô tả sản phẩm" rows="4" required></textarea>
+</div>
 
               <div class="mb-3">
                 <label for="price" class="form-label">Số giá tiền</label>
-                <input type="text" class="form-control" id="price" name="price"  placeholder="Nhập giá tiền" required>
+                <input type="text" class="form-control price" id="price" name="price"  placeholder="Nhập giá tiền" required>
               </div>
 				<div class="mb-3">
                 <label for="quantity" class="form-label">Nhập số lượng</label>
@@ -73,7 +73,26 @@
              <%@include file="footer_admin.jsp" %>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const priceInput = document.getElementById("price");
+
+  // Khi người dùng rời khỏi ô input thì mới format
+  priceInput.addEventListener("blur", function () {
+    let raw = priceInput.value.replace(/\D/g, "");
+    if (raw) {
+      priceInput.value = Number(raw).toLocaleString('vi-VN');
+    } else {
+      priceInput.value = "";
+    }
+  });
+
+  // Trước khi submit, bỏ định dạng (chuyển về số thật)
+  priceInput.form.addEventListener("submit", function () {
+    priceInput.value = priceInput.value.replace(/\D/g, "");
+  });
+});
+</script>
         <script src="<%= request.getContextPath() %>/assets/js/scripts.js"></script>
         <script src="<%= request.getContextPath() %>/assets/https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="<%= request.getContextPath() %>/assets/js/chart-area-demo.js"></script>

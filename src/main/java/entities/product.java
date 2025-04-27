@@ -1,6 +1,7 @@
 package entities;
 
 import java.security.Timestamp;
+import java.util.List;
 
 public class product {
 	private int id;
@@ -9,8 +10,22 @@ public class product {
 	private String description;
 	private double price;
 	private int quantity;
+	private List<productimages> images;
 	private Timestamp create_at;
 	private Timestamp update_at;
+	private String categoryName;
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+	public List<productimages> getImages() {
+		return images;
+	}
+	public void setImages(List<productimages> images) {
+		this.images = images;
+	}
 	public int getId() {
 		return id;
 	}
@@ -89,6 +104,31 @@ public class product {
 		this.name = name;
 		this.price = price;
 		this.quantity = quantity;
+	}
+	public product(int id, int category_id, String name, String description, double price, int quantity) {
+		super();
+		this.id = id;
+		this.category_id = category_id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.quantity = quantity;
+	}
+	public product(int id, int category_id, String name, String description, double price, int quantity,
+			String categoryName) {
+		super();
+		this.id = id;
+		this.category_id = category_id;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.quantity = quantity;
+		this.categoryName = categoryName;
+	}
+	@Override
+	public String toString() {
+		return "product [id=" + id + ", category_id=" + category_id + ", name=" + name + ", description=" + description
+				+ ", price=" + price + ", quantity=" + quantity + ", categoryName=" + categoryName + "]";
 	}
 	
 }
