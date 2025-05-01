@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,12 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import entities.category;
 import entities.user;
+import service.category_Service;
 import service.product_Service;
 
 @WebServlet(name = "homeServlet", urlPatterns = "/")
 public class home extends HttpServlet {
 	private product_Service productService=new product_Service();
+	private category_Service categoryService=new category_Service();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -35,6 +40,11 @@ public class home extends HttpServlet {
             req.setAttribute("womenProducts", productService.getLatestProductsByCategory(1, 3));
             req.setAttribute("kidsProducts", productService.getLatestProductsByCategory(6, 3));
             req.setAttribute("accessoriesProducts", productService.getLatestProductsByCategory(7, 3));
+            
+            List<category> categories = categoryService.getAllCategory();
+            req.getSession().setAttribute("categories", categories);
+
+            
             req.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(req, resp);        
     }
 }

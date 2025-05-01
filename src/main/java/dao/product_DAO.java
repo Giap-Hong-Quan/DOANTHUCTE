@@ -177,10 +177,53 @@ public class product_DAO {
         return products;
     }
 
+ // Lấy tất cả sản phẩm
+    public List<product> getAllProduct(int offset, int limit) throws SQLException {
+        List<product> list = new ArrayList<>();
+        String sql = "SELECT * FROM products LIMIT ? OFFSET ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, limit);  // số sản phẩm mỗi trang
+            stmt.setInt(2, offset); // trang nào, tương ứng với OFFSET
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int category_Id = rs.getInt("category_id");
+                String name = rs.getString("name");
+                String description = rs.getString("description");
+                double price = rs.getDouble("price");
+                int quantity = rs.getInt("quantity");
+
+                list.add(new product(id, category_Id, name, description, price, quantity));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     
-	public static void main(String[] args) {
-		Connection conn=connect.getConnections();
-		product_DAO a=new product_DAO(conn);
-		System.out.println(a.getLatestProductsByCategory(4,4).toString());
-	}
+    public List<product> getProductsByCategoryId(int categoryId, int offset, int limit) throws SQLException {
+        List<product> list = new ArrayList<>();
+        String sql = "SELECT * FROM products WHERE category_id = ? LIMIT ? OFFSET ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, categoryId);
+        ps.setInt(2, limit);  // số sản phẩm mỗi trang
+        ps.setInt(3, offset); // trang nào, tương ứng với OFFSET
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            int category_Id = rs.getInt("category_id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            double price = rs.getDouble("price");
+            int quantity = rs.getInt("quantity");
+            list.add(new product(id, category_Id, name, description, price, quantity));
+        }
+        return list;
+    }
+
+
+    
+    
+	
 }

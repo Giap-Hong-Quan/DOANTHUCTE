@@ -3,6 +3,7 @@ package service;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,31 +128,54 @@ public class product_Service {
 
 	        return products;
 	    }
-	    public static void main(String[] args) {
-	        try {
-	            product_Service productService = new product_Service();  // Khởi tạo productService
-	            List<product> products = productService.getLatestProductsByCategory(4, 4);  // Lấy ra 4 sản phẩm mới nhất theo categoryId=4
-
-	            // In ra danh sách sản phẩm
-	            for (product p : products) {
-	                System.out.println("Product ID: " + p.getId());
-	                System.out.println("Product Name: " + p.getName());
-	                System.out.println("Product Description: " + p.getDescription());
-	                System.out.println("Product Price: " + p.getPrice());
-	                
-	                if (p.getImages() != null && !p.getImages().isEmpty()) {
-	                    System.out.println("Product Images: ");
-	                    for (productimages img : p.getImages()) {
-	                        System.out.println("- " + img.getImage());
-	                    }
-	                } else {
-	                    System.out.println("No images found for this product.");
-	                }
-	                System.out.println("------------------------------");
+	    
+	    
+	    
+	    // hàm lấy ra tất cả sản phẩm kèm 1 ảnh
+	    public List<product> getAllProducts(int page) throws SQLException {
+	        int productsPerPage = 9;
+	        int offset = (page - 1) * productsPerPage;
+	        List<product> products = productDao.getAllProduct(offset, productsPerPage);
+	        
+	        // Gán ảnh đầu tiên cho sản phẩm
+	        for (product p : products) {
+	            String firstImage = productimagesDao.getFirstImageByProductId(p.getId());
+	            if (firstImage != null) {
+	                List<productimages> imageList = new ArrayList<>();
+	                imageList.add(new productimages(p.getId(), firstImage)); 
+	                p.setImages(imageList);
 	            }
-
-	        } catch (Exception e) {
-	            e.printStackTrace();
 	        }
+	        return products;
+	    }
+
+	    
+	    // lấy sản phẩm theo category 
+	    public List<product> getProductsByCategoryId(int categoryId, int page) throws SQLException {
+	        int productsPerPage = 9;
+	        int offset = (page - 1) * productsPerPage;
+	        List<product> products = productDao.getProductsByCategoryId(categoryId, offset, productsPerPage);
+	        
+	        // Gán ảnh đầu tiên cho sản phẩm
+	        for (product p : products) {
+	            String firstImage = productimagesDao.getFirstImageByProductId(p.getId());
+	            if (firstImage != null) {
+	                List<productimages> imageList = new ArrayList<>();
+	                imageList.add(new productimages(p.getId(), firstImage));
+	                p.setImages(imageList);
+	            }
+	        }
+	        return products;
+	    }
+
+	    // hàm lấy ra tất cả sản phẩm kèm 1 ảnh
+	    public product  getProductByIdd(int productId) throws SQLException {
+	    	 product p = productDao.getProductById(productId);
+	         // Lấy ảnh đầu tiên cho sản phẩm
+	         String firstImage = productimagesDao.getFirstImageByProductId(productId);
+	         if (firstImage != null) {
+	             p.setImages(List.of(new productimages(productId, firstImage))); // set ảnh đầu tiên
+	         }
+	         return p;
 	    }
 }

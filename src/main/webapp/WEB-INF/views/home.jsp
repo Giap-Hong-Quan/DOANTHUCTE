@@ -52,7 +52,7 @@ https://templatemo.com/tm-571-hexashop
                                 <h4>Chúng tôi là Dogoshop</h4>
                                 <span>Mang lại cho khách hàng những sản phẩm tốt nhất</span>
                                 <div class="main-border-button">
-                                    <a href="#">Mua ngay!</a>
+                                    <a href="<%= request.getContextPath() %>/product">Mua ngay!</a>
                                 </div>
                             </div>
                             <img src="assets/images/left-banner-image.jpg" alt="">
@@ -74,7 +74,7 @@ https://templatemo.com/tm-571-hexashop
                                                 <h4>Nữ</h4>
                                                 <p>Khám phá thế giới thời trang nữ đầy cuốn hút – nơi vẻ đẹp và phong cách lên ngôi..</p>
                                                 <div class="main-border-button">
-                                                    <a href="#">Khám phá thêm</a>
+                                                    <a href="<%= request.getContextPath() %>/product/1">Khám phá thêm</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,7 +94,7 @@ https://templatemo.com/tm-571-hexashop
                                                 <h4>Men</h4>
                                                 <p>Khám phá phong cách thời trang nam đầy lịch lãm và cá tính – định hình đẳng cấp riêng của bạn..</p>
                                                 <div class="main-border-button">
-                                                    <a href="#">Khám phá thêm</a>
+                                                    <a href="<%= request.getContextPath() %>/product/4">Khám phá thêm</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -114,7 +114,7 @@ https://templatemo.com/tm-571-hexashop
                                                 <h4>Trẻ em</h4>
                                                 <p>Khám phá thời trang trẻ em đáng yêu và năng động – nơi bé thoải mái vui chơi và tỏa sáng mỗi ngày.</p>
                                                 <div class="main-border-button">
-                                                    <a href="#">Khám phá thêm</a>
+                                                    <a href="<%= request.getContextPath() %>/product/6">Khám phá thêm</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +134,7 @@ https://templatemo.com/tm-571-hexashop
                                                 <h4>Phụ kiện</h4>
                                                 <p>Khám phá phụ kiện thời trang tinh tế – điểm nhấn hoàn hảo để tôn lên cá tính và phong cách của bạn.</p>
                                                 <div class="main-border-button">
-                                                    <a href="#">Khám phá thêm</a>
+                                                    <a href="<%= request.getContextPath() %>/product/7">Khám phá thêm</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -172,16 +172,16 @@ https://templatemo.com/tm-571-hexashop
         <div class="thumb">
             <div class="hover-content">
                 <ul>
-                    <li><a href="single-product?id=${p.id}"><i class="fa fa-eye"></i></a></li>
-                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                    <li><a href="<%= request.getContextPath() %>/product_detail/${p.id}"><i class="fa fa-eye"></i></a></li>
+                 
+                    <li><a href="<%= request.getContextPath() %>/cart/${p.id}"><i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
             </div>
             <!-- Hiển thị ảnh đầu tiên của sản phẩm -->
             <img src="${p.images[0].image}" alt="${p.name}" style="height: 350px";object-fit: cover;>
         </div>
         <div class="down-content">
-            <h4>${p.name}</h4>
+            <h4 style=" display: -webkit-box; -webkit-line-clamp: 2; /* Giới hạn số dòng */ -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;height: 3em; /* Chiều cao tối đa (2 dòng) */ line-height: 1.5em; /* Chiều cao mỗi dòng */ text-align: left;">${p.name}</h4>
             <span  class="price">${p.price}</span>
         </div>
     </div>
@@ -217,16 +217,16 @@ https://templatemo.com/tm-571-hexashop
         <div class="thumb">
             <div class="hover-content">
                 <ul>
-                    <li><a href="single-product?id=${p.id}"><i class="fa fa-eye"></i></a></li>
-                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                    <li><a href="<%= request.getContextPath() %>/product_detail/${p.id}"><i class="fa fa-eye"></i></a></li>
+                    
+                    <li><a href="<%= request.getContextPath() %>/cart/${p.id}""><i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
             </div>
             <!-- Hiển thị ảnh đầu tiên của sản phẩm -->
             <img src="${p.images[0].image}" alt="${p.name}" style="height: 350px";object-fit: cover;>
         </div>
         <div class="down-content">
-            <h4>${p.name}</h4>
+             <h4 style=" display: -webkit-box; -webkit-line-clamp: 2; /* Giới hạn số dòng */ -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;height: 3em; /* Chiều cao tối đa (2 dòng) */ line-height: 1.5em; /* Chiều cao mỗi dòng */ text-align: left;">${p.name}</h4>
             <span  class="price">${p.price}</span>
         </div>
     </div>
@@ -263,16 +263,16 @@ https://templatemo.com/tm-571-hexashop
         <div class="thumb">
             <div class="hover-content">
                 <ul>
-                    <li><a href="single-product?id=${p.id}"><i class="fa fa-eye"></i></a></li>
-                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                    <li><a href="<%= request.getContextPath() %>/product_detail/${p.id}"><i class="fa fa-eye"></i></a></li>
+               
+                    <li><a href="<%= request.getContextPath() %>/cart/${p.id}""><i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
             </div>
             <!-- Hiển thị ảnh đầu tiên của sản phẩm -->
             <img src="${p.images[0].image}" alt="${p.name}" style="height: 350px";object-fit: cover;>
         </div>
         <div class="down-content">
-            <h4>${p.name}</h4>
+             <h4 style=" display: -webkit-box; -webkit-line-clamp: 2; /* Giới hạn số dòng */ -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;height: 3em; /* Chiều cao tối đa (2 dòng) */ line-height: 1.5em; /* Chiều cao mỗi dòng */ text-align: left;">${p.name}</h4>
             <span  class="price">${p.price}</span>
         </div>
     </div>
@@ -305,16 +305,16 @@ https://templatemo.com/tm-571-hexashop
         <div class="thumb">
             <div class="hover-content">
                 <ul>
-                    <li><a href="single-product?id=${p.id}"><i class="fa fa-eye"></i></a></li>
-                    <li><a href="#"><i class="fa fa-star"></i></a></li>
-                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                    <li><a href="<%= request.getContextPath() %>/product_detail/${p.id}"><i class="fa fa-eye"></i></a></li>
+          
+                    <li><a href="<%= request.getContextPath() %>/cart/${p.id}""><i class="fa fa-shopping-cart"></i></a></li>
                 </ul>
             </div>
             <!-- Hiển thị ảnh đầu tiên của sản phẩm -->
             <img src="${p.images[0].image}" alt="${p.name}"style="height: 350px";object-fit: cover; >
         </div>
         <div class="down-content">
-            <h4>${p.name}</h4>
+             <h4 style=" display: -webkit-box; -webkit-line-clamp: 2; /* Giới hạn số dòng */ -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;height: 3em; /* Chiều cao tối đa (2 dòng) */ line-height: 1.5em; /* Chiều cao mỗi dòng */ text-align: left;">${p.name}</h4>
             <span class="price">${p.price}</span>
         </div> 
     </div>
