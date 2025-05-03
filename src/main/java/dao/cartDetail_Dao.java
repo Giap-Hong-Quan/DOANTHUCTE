@@ -118,4 +118,11 @@ public class cartDetail_Dao {
           return ps.executeUpdate() > 0;
       }
   }	
+  public boolean deleteCartItems(int cartId) throws SQLException {
+      String sql = "DELETE FROM cart_detail WHERE cart_id = ?";
+      try (PreparedStatement ps = conn.prepareStatement(sql)) {
+          ps.setInt(1, cartId);
+          return ps.executeUpdate() > 0;
+      }
+  }	
 }

@@ -27,4 +27,12 @@ public class cart_detail_Service  {
 	            return false;
 	        }
 	    }
+	  public boolean deleteCartItems(int cartId) {
+	        try {
+	            return cartDetailService.deleteCartItems(cartId);
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
+	    }
 }
