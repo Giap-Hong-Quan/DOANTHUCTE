@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,5 +35,68 @@ public class order_items_DAO {
 	        e.printStackTrace();
 	        return false; // Trả về false nếu có lỗi
 	    }
+	}
+	// Lấy tất cả các mục đơn hàng của một người dùng
+    public List<order_items> getAllOrderItemsByUserId(int userId) {
+        List<order_items> orderItems = new ArrayList<>();
+        String sql = "SELECT oi.*, o.user_id FROM order_items oi " +
+                     "JOIN orders o ON oi.order_id = o.id " +
+                     "WHERE o.user_id = ? " +
+                     "ORDER BY o.order_date DESC";
+        
+        try (
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+            	order_items item = new order_items();
+                item.setId(rs.getInt("id"));
+                item.setOrder_id(rs.getInt("order_id"));
+                item.setProduct_id(rs.getInt("product_id"));
+                item.setQuantity(rs.getInt("quantity"));
+                item.setPrice(rs.getDouble("price"));
+                item.setSubtotal(rs.getDouble("subtotal"));
+                orderItems.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return orderItems;
+    }
+    // Lấy một mục đơn hàng cụ thể
+    public order_items getOrderItemById(int id) {
+    	order_items item = null;
+        String sql = "SELECT * FROM order_items WHERE id = ?";
+        
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                item = new order_items();
+                item.setId(rs.getInt("id"));
+                item.setOrder_id(rs.getInt("order_id"));
+                item.setProduct_id(rs.getInt("product_id"));
+                item.setQuantity(rs.getInt("quantity"));
+                item.setPrice(rs.getDouble("price"));
+                item.setSubtotal(rs.getDouble("subtotal")); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
+
+    
+    
+    
+    public static void main(String[] args) {
+		Connection conn=connect.getConnections();
+		order_items_DAO a=new order_items_DAO(conn);
+		System.out.println(a.getOrderItemById(4).toString());
 	}
 }

@@ -16,6 +16,14 @@ public class orders {
     private int payment_status; // "chưa thanh toán" hoặc "đã thanh toán"
     private String transaction_id; // cho thanh toán online
     private List<order_items> order_items;
+    
+	@Override
+	public String toString() {
+		return "orders [id=" + id + ", user_id=" + user_id + ", order_date=" + order_date + ", total_price="
+				+ total_price + ", status_id=" + status_id + ", name=" + name + ", address=" + address + ", phone="
+				+ phone + ", payment_method=" + payment_method + ", payment_status=" + payment_status
+				+ ", transaction_id=" + transaction_id + ", order_items=" + order_items + "]";
+	}
 	public int getId() {
 		return id;
 	}

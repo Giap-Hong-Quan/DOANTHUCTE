@@ -72,5 +72,11 @@ public class order_items {
 	public order_items() {
 		super();
 	}
+	@Override
+	public String toString() {
+		return "order_items [id=" + id + ", order_id=" + order_id + ", product_id=" + product_id + ", quantity="
+				+ quantity + ", price=" + price + ", subtotal=" + subtotal + ", productName=" + productName
+				+ ", productImage=" + productImage + "]";
+	}
     
 }

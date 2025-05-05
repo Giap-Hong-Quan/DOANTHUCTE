@@ -87,7 +87,7 @@
                                     <ul>
                                         <li><a href="#">${user.name}</a></li>
                                         <li><a href="<%= request.getContextPath() %>/profile/${user.id}">Thông tin khách hàng</a></li>
-                                        <li><a href="#">Lịch sử mua hàng</a></li>
+                                        <li><a href="<%= request.getContextPath() %>/purchase-history">Lịch sử mua hàng</a></li>
                                         <li><a href="<%= request.getContextPath() %>/logout">Đăng xuất</a></li>
                                     </ul>
                                 </li>

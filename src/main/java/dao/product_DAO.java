@@ -222,8 +222,26 @@ public class product_DAO {
         return list;
     }
 
-
+    public String getProductNameById(int productId) {
+        String name = "";
+        try {
+            String sql = "SELECT name FROM products WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                name = rs.getString("name");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
     
-    
+    public static void main(String[] args) {
+		Connection conn=connect.getConnections();
+		product_DAO a=new product_DAO(conn);
+		System.out.println(a.getProductNameById(29));
+	}
 	
 }

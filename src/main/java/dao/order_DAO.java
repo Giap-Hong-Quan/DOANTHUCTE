@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import connectDatabase.connect;
 import entities.orders;
@@ -55,32 +57,74 @@ public class order_DAO {
 	            stmt.executeUpdate();
 	        }
 	    }
-	 public static void main(String[] args) {
-		    Connection conn = null;
-		    try {
-		        conn = connect.getConnections();
-		        order_DAO a = new order_DAO(conn);
-		        
-		        java.util.Date utilDate = new java.util.Date();
-		         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-		        
-		        // Test case 2: Transaction ID null (COD)
-		        orders order2 = new orders(
-		            47,sqlDate, 100000, 0, 
-		            "quan", "hcm", "033890607", 0, 0, "ưbjhwegie912213"
-		        );
-		        System.out.println("Order 2 ID: " + a.insertOrder(order2));
-		        
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    } finally {
-		        if (conn != null) {
-		            try {
-		                conn.close();
-		            } catch (SQLException e) {
-		                e.printStackTrace();
-		            }
-		        }
-		    }
+	// lấy danh sách đơn hàng của từng tài khoản 
+	// Lấy danh sách đơn hàng của user
+	    public List<orders> getOrdersByUserId(int userId) {
+	        List<orders> orders = new ArrayList<>();
+	        String sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY order_date DESC";
+	        try(PreparedStatement stmt=conn.prepareStatement(sql)){
+	            stmt.setInt(1, userId);
+	            ResultSet rs = stmt.executeQuery();
+	            
+	            while (rs.next()) {
+	            	orders order = new orders();
+	                order.setId(rs.getInt("id"));
+	                order.setUser_id(rs.getInt("user_id"));
+	                order.setOrder_date(new java.sql.Date(rs.getTimestamp("order_date").getTime()));
+	                order.setTotal_price(rs.getDouble("total_price"));
+	                order.setStatus_id(rs.getInt("status_id"));
+	                order.setName(rs.getString("name"));
+	                order.setAddress(rs.getString("address"));
+	                order.setPhone(rs.getString("phone"));
+	                order.setPayment_method(rs.getInt("payment_method"));
+	                order.setPayment_status(rs.getInt("payment_status"));
+	                order.setTransaction_id(rs.getString("transaction_id"));
+	                orders.add(order);
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } 
+	        return orders;
+	    }
+	    
+	    // // Lấy thông tin chi tiết của một đơn hàng
+	    public orders getOrderById(int orderId, int userId) {
+	    	orders order = null;
+	    	String sql = "SELECT * FROM orders WHERE id = ? AND user_id = ?";
+	        try(PreparedStatement stmt=conn.prepareStatement(sql)) {
+	            stmt.setInt(1, orderId);
+	            stmt.setInt(2, userId);
+	            ResultSet rs = stmt.executeQuery();
+	            
+	            if (rs.next()) {
+	                order = new orders();
+	                order.setId(rs.getInt("id"));
+	                order.setUser_id(rs.getInt("user_id"));
+	                order.setOrder_date(new java.sql.Date(rs.getTimestamp("order_date").getTime()));
+	                order.setTotal_price(rs.getDouble("total_price"));
+	                order.setStatus_id(rs.getInt("status_id"));
+	                order.setName(rs.getString("name"));
+	                order.setAddress(rs.getString("address"));
+	                order.setPhone(rs.getString("phone"));
+	                order.setPayment_method(rs.getInt("payment_method"));
+	                order.setPayment_status(rs.getInt("payment_status"));
+	                order.setTransaction_id(rs.getString("transaction_id"));
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } 
+	        return order;
+	    }
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    public static void main(String[] args) {
+			Connection conn=connect.getConnections();
+			order_DAO a=new order_DAO(conn);
+			System.out.println(a.getOrderById(7,47).toString());
 		}
 }
