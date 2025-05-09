@@ -91,7 +91,31 @@ public class order_items_DAO {
         return item;
     }
 
-    
+ // Lấy tất cả các items của một đơn hàng
+    public List<order_items> getOrderItemsByOrderId(int orderId) {
+        List<order_items> items = new ArrayList<>();
+        String sql = "SELECT * FROM order_items WHERE order_id = ?";
+        
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                order_items item = new order_items();
+                item.setId(rs.getInt("id"));
+                item.setOrder_id(rs.getInt("order_id"));
+                item.setProduct_id(rs.getInt("product_id"));
+                item.setQuantity(rs.getInt("quantity"));
+                item.setPrice(rs.getDouble("price"));
+                item.setSubtotal(rs.getDouble("subtotal"));
+                items.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return items;
+    }
     
     
     public static void main(String[] args) {

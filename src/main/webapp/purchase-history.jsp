@@ -217,7 +217,7 @@
                             </div>
                         </div>
                         <div class="col-md-3 text-md-right order-actions">
-                            <a href="purchase-history?action=detail&id=${item.id}" class="btn btn-view-detail">
+                            <a href="purchase-history/detail/${item.id}" class="btn btn-view-detail">
                                 <i class="fas fa-eye mr-2"></i> Xem chi tiết
                             </a>
                         </div>

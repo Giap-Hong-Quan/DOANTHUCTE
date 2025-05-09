@@ -61,7 +61,25 @@ public class orderItemsService {
 	    	}
 	    	return orderitem;
 	 }
-	 
+	// Lấy tất cả các items của một đơn hàng và thêm thông tin sản phẩm
+	 public List<order_items> getOrderItemsByOrderId(int orderId) {
+	     List<order_items> items = orderItemsService.getOrderItemsByOrderId(orderId);
+	     
+	     // Lặp qua từng item để lấy thông tin sản phẩm
+	     for (order_items item : items) {
+	         // Lấy thông tin ảnh sản phẩm
+	         String firstImage = productimagesDao.getFirstImageByProductId(item.getProduct_id());
+	         if (firstImage != null) {
+	             item.setProductImage(firstImage);
+	         }
+	         
+	         // Lấy tên sản phẩm
+	         String productName = productDao.getProductNameById(item.getProduct_id());
+	         item.setProductName(productName);
+	     }
+	     
+	     return items;
+	 }
 	 public static void main(String[] args) {
 		Connection conn=connect.getConnections()	;
 		orderItemsService a=new orderItemsService();
