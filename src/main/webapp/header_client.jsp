@@ -80,7 +80,7 @@
                                 <!-- Nếu có user, hiển thị thông tin người dùng -->
                                 <li class="submenu">
                                     <a href="javascript:;">
-                                        <img src="${user.avatar != null ? user.avatar : '/path/to/default-avatar.jpg'}" 
+                                        <img src="${user.avatar != null ? user.avatar : pageContext.request.contextPath.concat('/assets/images/default-avatar.jpg')}"
                                              alt="${user.name}" 
                                              style="width: 30px; height: 30px; border-radius: 50%; border: 3px solid #666464;">
                                     </a>

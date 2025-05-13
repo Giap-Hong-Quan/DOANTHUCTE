@@ -160,6 +160,25 @@
             color: white;
             text-decoration: none;
         }
+
+        .order-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .status-processing {
+            background-color: #e8f4fd;
+            color: #0a84ff;
+        }
+        
+        .status-delivered {
+            background-color: #e6f7ec;
+            color: #00c853;
+        }
         
         @media (max-width: 768px) {
             .product-image {
@@ -183,7 +202,7 @@
     <div class="purchase-history-container">
         <h2 class="page-title">Lịch Sử Mua Hàng</h2>
         
-        <c:if test="${empty orderItems}">
+        <c:if test="${empty orders}">
             <div class="empty-orders">
                 <i class="fas fa-shopping-bag"></i>
                 <p>Bạn chưa có đơn hàng nào</p>
@@ -193,31 +212,40 @@
             </div>
         </c:if>
         
-        <c:forEach var="item" items="${orderItems}">
+        <c:forEach var="order" items="${orders}">
             <div class="order-item">
                 <div class="order-header">
                     <div class="row">
                         <div class="col-md-6">
-                            <i class="fas fa-receipt mr-2"></i> Mã đơn hàng: #${item.id}
+                            <i class="fas fa-receipt mr-2"></i> Mã đơn hàng: #${order.id}
+                            <c:choose>
+                                <c:when test="${order.status_id == 1}">
+                                    <span class="order-status status-processing">Đang giao hàng</span>
+                                </c:when>
+                                <c:when test="${order.status_id == 2}">
+                                    <span class="order-status status-delivered">Đã giao hàng</span>
+                                </c:when>
+                            </c:choose>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <i class="far fa-calendar-alt mr-2"></i> <fmt:formatDate value="${order.order_date}" pattern="dd/MM/yyyy HH:mm" />
                         </div>
                     </div>
                 </div>
                 <div class="order-body">
                     <div class="row align-items-center">
-                        <div class="col-md-2 col-sm-4 mb-3 mb-md-0">
-                            <img src="${item.productImage}" alt="${item.productName}" class="product-image">
-                        </div>
-                        <div class="col-md-7 col-sm-8 product-info">
-                            <h5>${item.productName}</h5>
-                            <div class="product-detail">
-                                <i class="fas fa-cubes mr-2"></i> <strong>Số lượng:</strong> ${item.quantity}
-                            </div>
-                            <div class="product-detail product-price">
-                                <i class="fas fa-tag mr-2"></i> <strong>Giá:</strong><span class="price">${item.price}</span>
+                        <div class="col-md-7">
+                            <div class="product-info">
+                                <div class="product-detail">
+                                    <i class="fas fa-cubes mr-2"></i> <strong>Số sản phẩm:</strong> ${order.totalItems}
+                                </div>
+                                <div class="product-detail product-price">
+                                    <i class="fas fa-tag mr-2"></i> <strong>Tổng tiền:</strong> <span class="price">${order.total_price}</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3 text-md-right order-actions">
-                            <a href="purchase-history/detail/${item.id}" class="btn btn-view-detail">
+                        <div class="col-md-5 text-md-right order-actions">
+                            <a href="purchase-history/detail/${order.id}" class="btn btn-view-detail">
                                 <i class="fas fa-eye mr-2"></i> Xem chi tiết
                             </a>
                         </div>
@@ -229,16 +257,18 @@
 
     <!-- Footer Area -->
     <%@include file="footer_client.jsp" %>
- <script>
-  // Format giá tiền kiểu Việt Nam
-  document.querySelectorAll('.price').forEach(el => {
-    const raw = parseFloat(el.textContent); // Lấy giá trị gốc (số)
-    if (!isNaN(raw)) {
-      const formatted = raw.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
-      el.textContent = formatted; // Cập nhật lại nội dung đã format
-    }
-  });
-</script>
+    
+    <script>
+        // Format giá tiền kiểu Việt Nam
+        document.querySelectorAll('.price').forEach(el => {
+            const raw = parseFloat(el.textContent); // Lấy giá trị gốc (số)
+            if (!isNaN(raw)) {
+                const formatted = raw.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                el.textContent = formatted; // Cập nhật lại nội dung đã format
+            }
+        });
+    </script>
+    
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="<%= request.getContextPath() %>/assets/js/popper.js"></script>

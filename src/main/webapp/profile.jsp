@@ -13,7 +13,7 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title>THông tin khách hàng</title>
+    <title>Thông tin khách hàng</title>
 
 
     <!-- Additional CSS Files -->
@@ -43,7 +43,7 @@
         <div class="card-body">
             <div class="row align-items-center">
                 <div class="col-md-4 text-center mb-3">
-                    <img src="${not empty user.avatar ? user.avatar : pageContext.request.contextPath.concat('/images/default-avatar.png')}"
+                    <img src="${not empty user.avatar ? user.avatar : pageContext.request.contextPath.concat('/assets/images/default-avatar.jpg')}"
                          class="rounded-circle shadow" width="150" height="150" alt="Avatar"
                          style="object-fit: cover; border: 4px solid #0d6efd;">
                 </div>
