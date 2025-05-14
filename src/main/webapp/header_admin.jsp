@@ -32,6 +32,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="<%= request.getContextPath() %>/profile">Thông tin cá nhân</a></li>
                 <li><hr class="dropdown-divider" /></li>
+                   <li><a class="dropdown-item" href="<%= request.getContextPath()%>">Trang chủ</a></li>
                 <li><a class="dropdown-item" href="<%= request.getContextPath()%>/logout">Đăng xuất</a></li>
             </ul>
         </li>

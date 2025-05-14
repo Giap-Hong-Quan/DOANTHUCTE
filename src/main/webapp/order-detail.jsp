@@ -349,10 +349,10 @@
                         <div class="summary-value">
                             <c:choose>
                                 <c:when test="${order.status_id == 0}">
-                                    <span class="order-status status-pending">Chờ xác nhận</span>
+                                    <span class="order-status status-pending">Đang giao </span>
                                 </c:when>
                                 <c:when test="${order.status_id == 1}">
-                                    <span class="order-status status-processing">Đang xử lý</span>
+                                    <span class="order-status status-processing">Đã giao</span>
                                 </c:when>
                                
                                

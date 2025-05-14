@@ -21,6 +21,13 @@
 
     // Thêm dòng này để set u vào request
     request.setAttribute("user", u);
+    
+    // Kiểm tra role_id của user
+    boolean isAdmin = false;
+    if (u != null && u.getRole_id() == 1) {
+        isAdmin = true;
+    }
+    request.setAttribute("isAdmin", isAdmin);
 %>
 
 
@@ -88,6 +95,9 @@
                                         <li><a href="#">${user.name}</a></li>
                                         <li><a href="<%= request.getContextPath() %>/profile/${user.id}">Thông tin khách hàng</a></li>
                                         <li><a href="<%= request.getContextPath() %>/purchase-history">Lịch sử mua hàng</a></li>
+                                        <% if (isAdmin) { %>
+                                            <li><a href="<%= request.getContextPath() %>/admin/dashboardAdmin">Trang admin</a></li>
+                                        <% } %>
                                         <li><a href="<%= request.getContextPath() %>/logout">Đăng xuất</a></li>
                                     </ul>
                                 </li>
